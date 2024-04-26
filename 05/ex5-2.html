@@ -18,6 +18,10 @@
             doSelect();
 
         }
+        $().ready(function () {
+            doSelect();
+        });
+
         async function doInsert() {
             var userid = document.getElementById('tf1').value;
             var tweet = document.getElementById('tf2').value;
