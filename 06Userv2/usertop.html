@@ -14,9 +14,9 @@
         $().ready(function () {
             init();
         });
-
+        var name = "";
         function init() {
-            var name = sessionStorage.getItem('username');
+            name = sessionStorage.getItem('username');
             document.getElementById('welcome').innerHTML = 'ようこそ' + name + 'さん';
         }
     </script>

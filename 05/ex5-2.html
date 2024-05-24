@@ -14,6 +14,17 @@
         function button1Pressed() {
             doInsert();
         }
+        function button2Pressed() {
+            doSelect();
+
+        }
+        $().ready(function () {
+            doSelect();
+        });
+
+        $().ready(function () {
+            setInterval(doSelect, 2000);
+        });
 
         async function doInsert() {
             var userid = document.getElementById('tf1').value;
@@ -24,6 +35,25 @@
             console.log(objects);
 
             document.getElementById('result').innerHTML = "tweetしました";
+            document.getElementById('tf2').value = "";
+        }
+        async function doSelect() {
+            var kensaku = document.getElementById('input-number').value;
+            var sql = "select * from Tweets where tweet like '%" + kensaku + "%' order by time desc limit 20"
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<table border="1">';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<tr>';
+                html = html + '<td>' + object.name + '</td>';
+                html = html + '<td>' + object.tweet + '</td>';
+                html = html + '<td>' + object.time + '</td>';
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('result2').innerHTML = html;
         }
     </script>
 
@@ -38,6 +68,11 @@
     <button onclick="button1Pressed()">tweet</button>
     <br>
     <p id="result"></p>
+
+    検索：<input id="input-number" type="text">
+    <button onclick="button2Pressed()">X</button>
+    <hr>
+    <p id="result2">xxxx</p>
 </body>
 
 </html>
