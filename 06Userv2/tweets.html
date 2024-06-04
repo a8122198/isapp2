@@ -37,7 +37,7 @@
         }
         async function doSelect() {
             var kensaku = document.getElementById('input-number').value;
-            var sql = "select * from Tweets where tweet like '%" + kensaku + "%' order by time desc limit 20"
+            var sql = "select * from Tweets where tweet like '%" + kensaku + "%' order by time desc limit 30"
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
@@ -48,6 +48,7 @@
                 html = html + '<td>' + object.name + '</td>';
                 html = html + '<td>' + object.tweet + '</td>';
                 html = html + '<td>' + object.time + '</td>';
+                html = html + '<td>' + `<button onclick='buttonFollowPressed("${object.name}")'>フォロー</button>` + '</td>';
                 html = html + '</tr>';
             }
             html = html + '</table>';
