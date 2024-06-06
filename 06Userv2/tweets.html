@@ -48,11 +48,14 @@
                 html = html + '<td>' + object.name + '</td>';
                 html = html + '<td>' + object.tweet + '</td>';
                 html = html + '<td>' + object.time + '</td>';
-                html = html + '<td>' + `<button onclick='buttonFollowPressed("${object.name}")'>フォロー</button>` + '</td>';
                 html = html + '</tr>';
             }
             html = html + '</table>';
             document.getElementById('result2').innerHTML = html;
+        }
+        function button3Pressed() {
+            var id = osql.getParam('userid');
+            location.href = "follow.html?userid=" + id;
         }
     </script>
 
@@ -69,7 +72,8 @@
     <p id="result"></p>
 
     検索：<input id="input-number" type="text">
-    <button onclick="button2Pressed()">X</button>
+    <button onclick="button2Pressed()">X</button><br>
+    <input type="button" value="フォロー一覧" onclick="button3Pressed();">
     <hr>
     <p id="result2">xxxx</p>
 </body>

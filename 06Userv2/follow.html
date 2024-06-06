@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="../lib/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/osql.js"></script>
+
+    <script>
+        osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
+        $(document).ready(function () {
+            init()
+            execSelect();
+        });
+        function init() {
+            var userid = osql.getParam('userid');
+            document.getElementById('welcome').innerHTML = 'ようこそ' + userid + 'さん';
+        }
+        async function execSelect() {
+            var sql = 'select * from Users';
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<table border="1">';
+            html = html + '<tr>';
+            html = html + '<td>' + "ID" + '</td>';
+            html = html + '<td>' + "Name" + '</td>';
+            html = html + '<td>' + "Follow" + '</td>';
+            html = html + '</tr>';
+            for (var i = 0; i < objects.length; i++) {
+                html = html + '<tr>';
+                var object = objects[i];
+                html = html + '<td>' + object.id + '</td>';
+                html = html + '<td>' + object.name + '</td>';
+                seachFollow(object.id);
+                html = html + '<td>' + `<input type="button" id="display" value="フォロー" onclick='buttonFollowPressed("${object.id}")'>` + '</td>';
+                html = html + '</tr>';
+                console.log(i);
+            }
+            html = html + '</table>';
+            document.getElementById('result').innerHTML = html;
+        }
+        function seachFollow(yourID) {
+            var yourid = yourID;
+            document.getElementById('display').value = "フォロー中";
+        }
+        console.log(Display);
+        async function buttonFollowPressed(yourID) {
+            var myid = osql.getParam('userid');
+            var yourid = yourID;
+
+            var sql = `insert into Follows (fromid, toid) values("${myid}", "${yourid}");`;
+            var objects = await osql.connect(sql);
+        }
+    </script>
+
+</head>
+
+<body>
+    <h1>Followers</h1>
+    <p id="welcome"></p>
+    <hr>
+    <p id="result">xxxx</p>
+</body>
+
+</html>

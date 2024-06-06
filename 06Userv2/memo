@@ -1,0 +1,17 @@
+var userid = osql.getParam('userid');
+var myfollow = `select * from Follows where fromid="${userid}";`;
+var follows = await osql.connect(myfollow);
+var yourid = yourID;
+var same = 0;
+var follow = follows[0];
+///if (follow == yourid) {
+///same = same + 1;
+///}
+
+if (same >= 1) {
+    Display = "フォロー中";
+}
+else {
+    Display = "フォロー";
+}
+var yourid = yourID;
