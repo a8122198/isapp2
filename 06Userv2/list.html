@@ -13,6 +13,7 @@
 
         $(document).ready(function () {
             execSelect();
+            execSelect2();
         });
         async function execSelect() {
             var sql = 'select * from Users';
@@ -41,6 +42,22 @@
             var objects = await osql.connect(sql);
             execSelect();
         }
+        async function execSelect2() {
+            var sql = 'select * from Follows';
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<table border="1">';
+            for (var i = 0; i < objects.length; i++) {
+                html = html + '<tr>';
+                var object = objects[i];
+                html = html + '<td>' + object.fromid + '</td>';
+                html = html + '<td>' + object.toid + '</td>';
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('result2').innerHTML = html;
+        }
     </script>
 
 </head>
@@ -48,6 +65,8 @@
 <body>
     <h1>Users</h1>
     <p id="result">xxxx</p>
+    <hr>
+    <p id="result2">xxxx</p>
 </body>
 
 </html>
